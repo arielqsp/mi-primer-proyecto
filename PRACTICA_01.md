@@ -68,25 +68,134 @@
 - <p align="justify"><b>doGet(HttpServletRequest req, HttpServletResponse resp):</b> Es el método llamado para procesar información que haya sido enviado con el método GET. Este método es llamado concurrentemente para cada cliente por lo que hay que estar atento por posibles variables compartidas que causen problemas.</p>
 - <p align="justify"><b>doPost(HttpServletRequest req, HttpServletResponse resp):</b> Ídem al anterior pero para el método POST, en general se implementa sólo un método y el otro lo referencia.</p>
 
+#### Ejemplo doGet
+~~~
+public class BookDetailServlet extends HttpServlet {
+
+    public void doGet (HttpServletRequest request,
+                       HttpServletResponse response)
+        throws ServletException, IOException
+    {
+        ...
+	// selecciona el tipo de contenido en la cabecera antes de acceder a Writer
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+	// Luego escribe la respuesta
+        out.println("<html>" +
+                    "<head><title>Book Description</title></head>" +
+                    ...);
+
+        //Obtiene el identificador del libro a mostrar
+        String bookId = request.getParameter("bookId");
+        if (bookId != null) {
+            // Y la información sobre el libro y la imprime
+            ...
+        }
+        out.println("</body></html>");
+        out.close();
+    }
+    ...
+}
+~~~
+#### Ejemplo doPost
+
+~~~
+public class ReceiptServlet extends HttpServlet { 
+
+    public void doPost(HttpServletRequest request,
+                       HttpServletResponse response)
+	throws ServletException, IOException
+    {
+        ...
+        // selecciona la cabecera de tipo de contenido antes de acceder a Writer
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        // Luego escribe la respuesta
+        out.println("<html>" +
+                    "<head><title> Receipt </title>" +
+                    ...);
+        
+        out.println("<h3>Thank you for purchasing your books from us " +
+                    request.getParameter("cardname") +
+                    ...);
+        out.close();
+    }
+    ...
+}
+~~~
+
 ####  Clase HttpServletRequest
 
 - <p align="justify"><b>getHeader(String name):</b> Permite obtener el valor de los Headers de HTTP con que fue llamado el servlet.</p>
+
 - <p align="justify"><b>getCookies():</b> Retorna un arreglo que contiene todas las cookies que el cliente envía al servlet.</p>
 - <p align="justify"><b>getSession():</b> Retorna la sesión en la cual se encuentra el cliente.</p>
+
+~~~
+//Ejemplo  getHeader
+String sIP = request.getHeader("X-FORWARDED-FOR");
+~~~
+
+~~~
+//Ejemplo  getCookies
+var testvalue = "Hola mundo!";
+document.cookie = "testcookie=" + encodeURIComponent( testvalue );
+~~~
+
+~~~
+//Ejemplo getSession
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   HttpSession session = request.getSession();
+   session.setMaxInactiveInterval(20*60);		
+}
+~~~
 
 #### Clase HttpServletResponse
 
 - <p align="justify"><b>addCookie(Cookie cookie): </b>Para definir nuevas cookies en el cliente.</p>
-- <p align="justify"><b>setHeader(String name, String value):<b> Para definir un header HTTP a enviar al cliente.</p>
+- <p align="justify"><b>setHeader(String name, String value):</b>Para definir un header HTTP a enviar al cliente.</p>
 - <p align="justify"><b>sendRedirect(String location): </b>Envía un mensaje al cliente para redireccionar la respuesta a la dirección señalada.</p>
 
 
+~~~
+//Ejemplo addCookie
+public void doGet (HttpServletRequest request,
+                       HttpServletResponse response)
+	throws ServletException, IOException
+    {
+        ...
+        //If the user wants to add a book, remember it by adding a cookie
+        if (values != null) {
+            bookId = values[0];
+            Cookie getBook = new Cookie("Buy", bookId);
+            getBook.setComment("User has indicated a desire " +
+                               "to buy this book from the bookstore.");
+            response.addCookie(getBook);
+        }
+        ...
+    }
+~~~
 
 
+~~~
+//Ejemplo sendRedirect
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("pagar");
+    }
+~~~
 
 
+~~~
+//Ejemplo setHeader
+// campo único está configurado
+res.setHeader('content-type', 'application/json');
 
-
-
-
-
+// se pueden configurar varios archivos
+res.set({
+     'content-type': 'application/json',
+     'content-length': '100',
+     'warning': "with content type charset encoding will be added by default"
+  });
+~~~
