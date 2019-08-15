@@ -63,7 +63,7 @@
 
 <h3 align="justify">11) Investigue los metodos mas utilizados de las clases HttpServlet, HttpServletRequest y HttpServletResponce y para cada uno muestre un ejemplo. </h3>
 
-#### Clase Httpservlet
+#### METODOS DE LA CLASE HttpServlet
 
 - <p align="justify"><b>doGet(HttpServletRequest req, HttpServletResponse resp):</b> Es el método llamado para procesar información que haya sido enviado con el método GET. Este método es llamado concurrentemente para cada cliente por lo que hay que estar atento por posibles variables compartidas que causen problemas.</p>
 - <p align="justify"><b>doPost(HttpServletRequest req, HttpServletResponse resp):</b> Ídem al anterior pero para el método POST, en general se implementa sólo un método y el otro lo referencia.</p>
@@ -126,7 +126,7 @@ public class ReceiptServlet extends HttpServlet {
 }
 ~~~
 
-####  Clase HttpServletRequest
+####  METODOS DE LA CLASE HttpServletRequest
 
 - <p align="justify"><b>getHeader(String name):</b> Permite obtener el valor de los Headers de HTTP con que fue llamado el servlet.</p>
 
@@ -152,7 +152,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 }
 ~~~
 
-#### Clase HttpServletResponse
+#### METODOS DE LA CLASE HttpServletResponse
 
 - <p align="justify"><b>addCookie(Cookie cookie): </b>Para definir nuevas cookies en el cliente.</p>
 - <p align="justify"><b>setHeader(String name, String value):</b>Para definir un header HTTP a enviar al cliente.</p>
