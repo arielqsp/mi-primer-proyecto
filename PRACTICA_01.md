@@ -6,7 +6,6 @@
 |**Materia:**|Tecnologías Emergentes II|
 |**Apellidos y nombres:**|Quispe Paye Ariel|
 |**C.I.:**|67658901LP|
-|**Fecha:**|14 de Agosto de 2019|
 
 
 ### 1) Explique que son los sistemas empresariales
